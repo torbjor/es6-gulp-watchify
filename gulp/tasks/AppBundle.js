@@ -39,7 +39,8 @@ export default class {
         };
 
         let bundler = watchify( browserify( opts ) );
-        // bundle.external( config.vendor.list );
+        
+        bundle.external( options.vendors );
 
         //Find out what .bind looks like in ES6
         bundler.on( 'error', gutil.log.bind( gutil, 'Browserify Error .' ) );
@@ -52,25 +53,25 @@ export default class {
          
                 var updateStart = Date.now();
 
-                console.log('Updating.');
+                console.log('Updating...');
 
                 bundler.bundle() 
-                .pipe( source( './appBundle.js' ) )
+                .pipe( source( options.bundleName ) )
 
-                .pipe( gulp.dest( './dist/' ) );
+                .pipe( gulp.dest( options.destinationFolder ) );
 
-                console.log( 'Updated.', ( Date.now() - updateStart ) + 'ms' );
+                console.log( 'Updated, took ', ( Date.now() - updateStart ) + 'ms' );
 
             }
         )
 
         .bundle()
-        .pipe( source( './appBundle.js' ) )
+        .pipe( source( options.bundleName ) )
 
         // .pipe( buffer() )
         // .pipe( uglify() )
 
-        .pipe( gulp.dest( './dist/' ) );
+        .pipe( gulp.dest( options.destinationFolder ) );
 
     }
 
