@@ -1,3 +1,3 @@
 export default function (){
-    console.log( 'App Starts here!!' );   
+    console.log( 'App Starts here' ); 
 } 
