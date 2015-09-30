@@ -1,12 +1,3 @@
-import reactify   from 'reactify';
-import babelify   from 'babelify';
-import browserify from 'browserify';
-import source     from 'vinyl-source-stream';
-import gutil      from 'gulp-util';
-import watchify   from 'watchify';
-import buffer     from 'vinyl-buffer';
-import uglify     from 'gulp-uglify';
-import gulp       from 'gulp';
 
 /*
     Looking to do the following:
@@ -22,9 +13,23 @@ import gulp       from 'gulp';
 
 */
 
-export default class {
+import reactify   from 'reactify';
+import babelify   from 'babelify';
+import browserify from 'browserify';
+import source     from 'vinyl-source-stream';
+import gutil      from 'gulp-util';
+import watchify   from 'watchify';
+import buffer     from 'vinyl-buffer';
+import uglify     from 'gulp-uglify';
+import gulp       from 'gulp';
+
+import DefaultBundle from './DefaultBundle';
+
+export default class AppBundle extends DefaultBundle {
 
     constructor( options ) {
+
+        super();
 
         let opts = {
             entries         : options.entries,

@@ -1,6 +1,6 @@
 import AppBundle from './AppBundle';
 
-export default class {
+export default class GulpTasks {
 
     appBundle() {
 
