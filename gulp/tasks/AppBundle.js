@@ -40,7 +40,7 @@ export default class {
 
         let bundler = watchify( browserify( opts ) );
         
-        bundle.external( options.vendors );
+        bundler.external( options.vendors );
 
         //Find out what .bind looks like in ES6
         bundler.on( 'error', gutil.log.bind( gutil, 'Browserify Error .' ) );
