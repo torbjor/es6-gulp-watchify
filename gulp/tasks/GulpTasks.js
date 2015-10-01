@@ -1,27 +1,31 @@
-import AppBundle from './AppBundle';
+import AppBundler from './AppBundler';
 
 export default class GulpTasks {
 
-    appBundle() {
+    appBundler () {
+        console.log('GulpTasks.appBundler');
+        return new AppBundler (
 
-        let options = {
-            entries             : [ './client/src/app/main.js' ],
-            bundleName          : './appBundle.js',
-            destinationFolder   : './dist/',
-            //Look for env var / mode etc
-            watch               : true,
-            uglify              : false,
-            vendors             : [ 'react' ]
-        };
+            {
+                settings : {
+                    entries           : [ './client/src/app/main.js' ],
+                    bundleName        : './appBundle.js',
+                    destinationFolder : './dist/',
+                },
+                options : {
+                    watch             : true,
+                    uglify            : false,
+                    vendors           : [ 'react' ]
+                }
+            }
 
-        return new AppBundle( options );
+        );
     
     }
 
+    vendorBundler () {
 
-    vendorBundle() {
-
-        console.log( 'GulpTasks.vendorBundle' );        
+        console.log( 'GulpTasks.vendorBundler' );        
 
     }
 
