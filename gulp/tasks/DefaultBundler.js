@@ -1,22 +1,25 @@
 
 import browserify from 'browserify';
 import watchify   from 'watchify';
+import reactify   from 'reactify';
+import babelify   from 'babelify';
+import uglify     from 'gulp-uglify';
 import gutil      from 'gulp-util';
 import source     from 'vinyl-source-stream';
 import buffer     from 'vinyl-buffer';
-import uglify     from 'gulp-uglify';
 import gulp       from 'gulp';
 
 export default class DefaultBundler {
 
-    setConfigProperties( a, b ) {
-        this.config = Object.assign( a, b );
+    setConfigProperties( props ) {
+        this.config = Object.assign( props, { transforms : [ babelify, reactify ] } );
     }
 
     bundle () {
         let config = this.config;
-        var b = watchify( browserify( {
+        var b = watchify( browserify({
             entries           : [ config.entries ],
+            transform         : this.config.transforms,
             bundleName        : config.bundleName,
             destinationFolder : config.destinationFolder,
             debug             : true,
