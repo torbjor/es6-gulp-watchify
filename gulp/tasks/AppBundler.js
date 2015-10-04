@@ -10,7 +10,7 @@ export default class AppBundler {
     constructor( props ) {
         
         let _defaultBundler = new DefaultBundler();
-        // _defaultBundler.setConfigProperties( props, { transforms : [ babelify, reactify ] } );
+        _defaultBundler.setConfigProperties( props, { transforms : [ babelify, reactify ] } );
         _defaultBundler.bundle();
 
     }

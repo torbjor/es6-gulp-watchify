@@ -1,4 +1,5 @@
 import AppBundler from './AppBundler';
+import path       from 'path';
 
 export default class GulpTasks {
 
@@ -6,18 +7,15 @@ export default class GulpTasks {
 
         console.log('GulpTasks.appBundler');
         
-        return new AppBundler (
-
-            {
-                entries           : [ './client/src/app/main.js' ],
-                bundleName        : 'appBundle.js',
-                destinationFolder : './dddist/',
-                watch             : true,
-                uglify            : false,
-                vendors           : [ 'react' ]
-            }
-
-        );
+        return new AppBundler ({
+            entries           : path.resolve( __dirname, '../../client/src/app/main.js' ),
+            bundleName        : 'appBundle.js',
+            destinationFolder : './dist/',
+            // lint              : false,
+            // watch             : true,
+            // uglify            : false,
+            vendors           : [ 'react' ]
+        });
     
     }
 

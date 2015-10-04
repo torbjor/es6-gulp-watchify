@@ -1,4 +1,3 @@
-import path       from 'path';
 import browserify from 'browserify';
 import watchify   from 'watchify';
 import gutil      from 'gulp-util';
@@ -7,29 +6,17 @@ import buffer     from 'vinyl-buffer';
 import uglify     from 'gulp-uglify';
 import gulp       from 'gulp';
 
-// import foo        from '../../client/src/app/main'
-
 export default class DefaultBundler {
 
-//     setConfigProperties( a, b ) {
-//         // {
-//         //     entries           : [ './client/src/app/main.js' ],
-//         //     bundleName        : 'appBundle.js',
-//         //     destinationFolder : './dddist/',
-//         //     watch             : true,
-//         //     uglify            : false,
-//         //     vendors           : [ 'react' ]
-//         // }
-//         this.config = Object.assign( a, b, DefaultBundler.requiredProperties );
-//     }
+    setConfigProperties( a, b ) {
+        this.config = Object.assign( a, b, DefaultBundler.requiredProperties );
+    }
 
     bundle () {
-
-        var pathToEntry = path.resolve( __dirname, '../../client/src/app/main.js' );
         var b = watchify(browserify({
-            entries           : [ pathToEntry ],
-            bundleName        : 'appBundle.js',
-            destinationFolder : './dist/',
+            entries           : [ this.config.entries ],
+            bundleName        : this.config.bundleName,
+            destinationFolder : this.config.destinationFolder,
             debug           : true, 
             cache           : {}, 
             packageCache    : {},
@@ -37,29 +24,22 @@ export default class DefaultBundler {
         }));
         
         b.bundle()
-            .pipe(source( pathToEntry ))
-            .pipe(gulp.dest('./dist'));
+            .pipe(source( this.config.entries ))
+            .pipe(gulp.dest(this.config.destinationFolder));
 
-        b.on('update', 
-            foo
-        );
-
-        function foo () {
+        b.on('update', () => 
             b.bundle()
-            .pipe(source( pathToEntry ))
-            .pipe(gulp.dest('./dist'))
-        }
+            .pipe(source( this.config.entries ))
+            .pipe(gulp.dest(this.config.destinationFolder))
+        );
 
     }
 
 }
 
-
 DefaultBundler.requiredProperties = { 
-    
-        debug           : true, 
-        cache           : {}, 
-        packageCache    : {},
-        fullPaths       : true
-
+    debug           : true, 
+    cache           : {}, 
+    packageCache    : {},
+    fullPaths       : true
 };
