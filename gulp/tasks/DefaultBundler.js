@@ -10,7 +10,7 @@ import gulp       from 'gulp';
 export default class DefaultBundler {
 
     setConfigProperties( a, b ) {
-        this.config = Object.assign( a, b, DefaultBundler.requiredProperties );
+        this.config = Object.assign( a, b );
     }
 
     bundle () {
@@ -19,7 +19,7 @@ export default class DefaultBundler {
             entries           : [ config.entries ],
             bundleName        : config.bundleName,
             destinationFolder : config.destinationFolder,
-            debug             : true, 
+            debug             : true,
             cache             : {}, 
             packageCache      : {},
             fullPaths         : true
@@ -38,10 +38,3 @@ export default class DefaultBundler {
     }
 
 }
-
-DefaultBundler.requiredProperties = { 
-    debug           : true, 
-    cache           : {}, 
-    packageCache    : {},
-    fullPaths       : true
-};
