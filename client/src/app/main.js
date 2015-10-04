@@ -1,3 +1,3 @@
-export default function (){
-    console.log( 'App Starts here' ); 
+function foo(){
+    console.log( 'App starts here' ); 
 } 

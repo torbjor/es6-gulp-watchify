@@ -1,3 +1,4 @@
+import path       from 'path';
 import browserify from 'browserify';
 import watchify   from 'watchify';
 import gutil      from 'gulp-util';
@@ -6,68 +7,59 @@ import buffer     from 'vinyl-buffer';
 import uglify     from 'gulp-uglify';
 import gulp       from 'gulp';
 
+// import foo        from '../../client/src/app/main'
+
 export default class DefaultBundler {
 
-    setConfigProperties( a, b ) {
-        this.config = Object.assign( a, b );
-    }
+//     setConfigProperties( a, b ) {
+//         // {
+//         //     entries           : [ './client/src/app/main.js' ],
+//         //     bundleName        : 'appBundle.js',
+//         //     destinationFolder : './dddist/',
+//         //     watch             : true,
+//         //     uglify            : false,
+//         //     vendors           : [ 'react' ]
+//         // }
+//         this.config = Object.assign( a, b, DefaultBundler.requiredProperties );
+//     }
 
-    bundle ( watch, minify ) {
-    
-        /*
-            this.config
-            is not correct
-        */
+    bundle () {
 
-        this.bundler = watchify( browserify( this.config ) );
-        this.bundler.external( this.config.options.vendors );
-  
-        //Find out what .bind looks like in ES6
-        this.bundler.on( 'error', gutil.log.bind( gutil, 'Browserify Error .' ) );
+        var pathToEntry = path.resolve( __dirname, '../../client/src/app/main.js' );
+        var b = watchify(browserify({
+            entries           : [ pathToEntry ],
+            bundleName        : 'appBundle.js',
+            destinationFolder : './dist/',
+            debug           : true, 
+            cache           : {}, 
+            packageCache    : {},
+            fullPaths       : true
+        }));
+        
+        b.bundle()
+            .pipe(source( pathToEntry ))
+            .pipe(gulp.dest('./dist'));
 
-        this.bundler.on( 
+        b.on('update', 
+            foo
+        );
 
-            'update', 
-
-            function () { 
-         
-                var updateStart = Date.now();
-
-                console.log('Updating...');
-
-                bundler.bundle() 
-                .pipe( source( this.config.settings.bundleName ) )
-
-                .pipe( gulp.dest( this.config.settings.destinationFolder ) );
-
-                console.log( 'Updated, took ', ( Date.now() - updateStart ) + 'ms' );
-
-            }
-        )
-
-        .bundle()
-        .pipe( source( this.config.settings.bundleName ) )
-
-        // .pipe( buffer() )
-        // .pipe( uglify() )
-
-        .pipe( gulp.dest( this.config.settings.destinationFolder ) );
+        function foo () {
+            b.bundle()
+            .pipe(source( pathToEntry ))
+            .pipe(gulp.dest('./dist'))
+        }
 
     }
-
 
 }
 
 
 DefaultBundler.requiredProperties = { 
     
-    required : {
-        //What does this due if false?
         debug           : true, 
-        //Encapsulate this cryptic mess!
         cache           : {}, 
         packageCache    : {},
         fullPaths       : true
-    }
 
 };
