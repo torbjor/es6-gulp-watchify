@@ -1,3 +1,4 @@
+
 import browserify from 'browserify';
 import watchify   from 'watchify';
 import gutil      from 'gulp-util';
@@ -13,24 +14,25 @@ export default class DefaultBundler {
     }
 
     bundle () {
-        var b = watchify(browserify({
-            entries           : [ this.config.entries ],
-            bundleName        : this.config.bundleName,
-            destinationFolder : this.config.destinationFolder,
-            debug           : true, 
-            cache           : {}, 
-            packageCache    : {},
-            fullPaths       : true
+        let config = this.config;
+        var b = watchify( browserify( {
+            entries           : [ config.entries ],
+            bundleName        : config.bundleName,
+            destinationFolder : config.destinationFolder,
+            debug             : true, 
+            cache             : {}, 
+            packageCache      : {},
+            fullPaths         : true
         }));
         
         b.bundle()
-            .pipe(source( this.config.entries ))
-            .pipe(gulp.dest(this.config.destinationFolder));
+            .pipe(source( config.bundleName ))
+            .pipe(gulp.dest( config.destinationFolder ) );
 
         b.on('update', () => 
             b.bundle()
-            .pipe(source( this.config.entries ))
-            .pipe(gulp.dest(this.config.destinationFolder))
+            .pipe( source( config.bundleName ) )
+            .pipe( gulp.dest( config.destinationFolder) )
         );
 
     }

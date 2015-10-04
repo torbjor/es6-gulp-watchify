@@ -11,6 +11,7 @@ export default class GulpTasks {
             entries           : path.resolve( __dirname, '../../client/src/app/main.js' ),
             bundleName        : 'appBundle.js',
             destinationFolder : './dist/',
+            // babel             : false,
             // lint              : false,
             // watch             : true,
             // uglify            : false,

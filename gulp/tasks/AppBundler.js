@@ -1,6 +1,6 @@
 
-import reactify   from 'reactify';
-import babelify   from 'babelify';
+import reactify         from 'reactify';
+import babelify         from 'babelify';
 
 import DefaultBundler   from './DefaultBundler';
 import ObjectUtil       from '../utils/ObjectUtil';
